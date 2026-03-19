@@ -1,21 +1,37 @@
 "use client";
 
-import Script from "next/script";
+import { pickAdForSlot, generateAdSrcDoc } from "@/config/ads.config";
+import { useEffect, useState } from "react";
 
 interface NativeAdProps {
-    /** "A" untuk Set A, "B" untuk Set B */
     set?: "A" | "B";
     className?: string;
 }
 
-/**
- * NativeAd
- */
 export function NativeAd({ set = "A", className }: NativeAdProps) {
+    const [srcDoc, setSrcDoc] = useState("");
+    const [adConfig, setAdConfig] = useState<any>(null);
+
+    useEffect(() => {
+        const ad = pickAdForSlot("native");
+        if (ad) {
+            setAdConfig(ad);
+            setSrcDoc(generateAdSrcDoc(ad));
+        }
+    }, []);
+
+    if (!adConfig) return null;
+
     return (
-        <div className={className}>
-            <Script async data-cfasync="false" src="https://latherachelesscatastrophe.com/5260f675994abff0ea23f09cbf357e89/invoke.js" strategy="afterInteractive" />
-            <div id="container-5260f675994abff0ea23f09cbf357e89" />
+        <div className={`w-full flex justify-center overflow-hidden my-4 min-h-[50px] ${className || ""}`}>
+            <iframe
+                srcDoc={srcDoc}
+                width={adConfig.width || 320}
+                height={adConfig.height || 50}
+                style={{ border: "none", overflow: "hidden", background: "transparent" }}
+                scrolling="no"
+                sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox allow-same-origin"
+            />
         </div>
     );
 }

@@ -7,7 +7,6 @@ import { DataSaverBanner } from "@/components/common/DataSaverBanner";
 import { DisablePrefetch } from "@/components/common/DisablePrefetch";
 import { SAVER_CONFIG } from "@/config/dataSaver";
 import { VERIFICATION_META_TAGS } from "@/config/ads.config";
-import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
@@ -113,7 +112,6 @@ export default function RootLayout({
           <StickyMobileAd />
           <Footer />
         </Providers>
-        <Script src="https://latherachelesscatastrophe.com/56/8d/31/568d312764c5ed7a4eb6638ee2adf59e.js" strategy="afterInteractive" />
       </body>
     </html >
   );
